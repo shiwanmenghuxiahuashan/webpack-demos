@@ -1,6 +1,12 @@
+const path = require("path");
 module.exports = {
-  entry: './main.js',
+  // 模式(mode)
+  mode: "production",
+  // 入口起点(entry point)
+  entry: "./main.js",
+  // 输出(output)
   output: {
-    filename: 'bundle.js'
-  }
+    path: path.resolve(__dirname, "public", "dist"),
+    filename: "my-first-webpack.bundle.js",
+  },
 };

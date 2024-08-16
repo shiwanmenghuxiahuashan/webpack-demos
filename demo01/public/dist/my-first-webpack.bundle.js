@@ -1,0 +1,1 @@
+(()=>{"use strict";console.log("main.js is running"),((e=[])=>{let o="";e.forEach(((e,n)=>{o+=n>5?`<h6>${e}</h6>`:`<h${n+1}>${e}</h${n+1}>`})),o+='<p style="color:#009688;">create by module1Method</p>',document.write(o)})(["webpack demo01","入口(entry)","依赖图(dependency graph)","bundle","输出(output)","模式(mode)","webpack.config.js","package.json"])})();
