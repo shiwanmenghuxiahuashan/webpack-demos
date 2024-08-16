@@ -1,4 +1,4 @@
-这个仓库是基于 [阮一峰](https://github.com/ruanyf) 的 Webpack 简明风格演示集合.
+这个仓库是基于 [阮一峰](https://github.com/ruanyf) 的 webpack 简明风格演示集合.
 
 原版示例配置于应用为 `webpack3.x` , 特更改为 `webpack5.x ` 版本, 以及增加了一些注释和说明, 以便更好的理解与贴近实际开发.
 
@@ -38,16 +38,15 @@ $ pnpm run dev
 
 如果上述命令没有自动打开您的浏览器, 你必须自己访问 http://127.0.0.1:8080 .
 
-## Webpack
+## webpack
 
-Webpack 是一个为浏览器构建 JavaScript 模块脚本的前端工具。
+webpack 是一个为浏览器构建 JavaScript 模块脚本的前端工具。
 
 ```bash
 $ webpack main.js bundle.js
-
 ```
 
-Webpack 需要一个名为 `webpack.config.js` 的配置文件，它只是一个 CommonJS 模块。
+webpack 需要一个名为 `webpack.config.js` 的配置文件，它只是一个 [CommonJS](https://javascript.ruanyifeng.com/nodejs/module.html) 模块。
 
 ```javascript
 // webpack.config.js
@@ -90,14 +89,14 @@ $ pnpm run dev
 
 ## Index
 
-1. [入口文件](./demo01/README.md)
+1. [入口文件](./demo01/README.md) [源码](./demo01/)
 1. [Multiple entry files](#demo02-multiple-entry-files-source)
 1. [Babel-loader](#demo03-babel-loader-source)
 1. [CSS-loader](#demo04-css-loader-source)
 1. [Image loader](#demo05-image-loader-source)
 1. [CSS Module](#demo06-css-module-source)
 1. [UglifyJs Plugin](#demo07-uglifyjs-plugin-source)
-1. [HTML Webpack Plugin and Open Browser Webpack Plugin](#demo08-html-webpack-plugin-and-open-browser-webpack-plugin-source)
+1. [HTML webpack Plugin and Open Browser webpack Plugin](#demo08-html-webpack-plugin-and-open-browser-webpack-plugin-source)
 1. [Environment flags](#demo09-environment-flags-source)
 1. [Code splitting](#demo10-code-splitting-source)
 1. [Code splitting with bundle-loader](#demo11-code-splitting-with-bundle-loader-source)
@@ -115,7 +114,7 @@ Multiple entry files are allowed. It is useful for a multi-page app which has di
 document.write('<h1>Hello World</h1>');
 
 // main2.js
-document.write('<h2>Hello Webpack</h2>');
+document.write('<h2>Hello webpack</h2>');
 ```
 
 index.html
@@ -147,9 +146,9 @@ module.exports = {
 
 ## Demo03: Babel-loader ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo03))
 
-Loaders are preprocessors which transform a resource file of your app ([more info](https://webpack.js.org/concepts/loaders/)) before Webpack's building process.
+Loaders are preprocessors which transform a resource file of your app ([more info](https://webpack.js.org/concepts/loaders/)) before webpack's building process.
 
-For example, [Babel-loader](https://www.npmjs.com/package/babel-loader) can transform JSX/ES6 file into normal JS files，after which Webpack will begin to build these JS files. Webpack's official doc has a complete list of [loaders](https://webpack.js.org/loaders/).
+For example, [Babel-loader](https://www.npmjs.com/package/babel-loader) can transform JSX/ES6 file into normal JS files，after which webpack will begin to build these JS files. webpack's official doc has a complete list of [loaders](https://webpack.js.org/loaders/).
 
 `main.jsx` is a JSX file.
 
@@ -204,7 +203,7 @@ The above snippet uses `babel-loader` which needs Babel's preset plugins [babel-
 
 ## Demo04: CSS-loader ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo04))
 
-Webpack allows you to include CSS in JS file, then preprocessed CSS file with [CSS-loader](https://github.com/webpack-contrib/css-loader).
+webpack allows you to include CSS in JS file, then preprocessed CSS file with [CSS-loader](https://github.com/webpack-contrib/css-loader).
 
 main.js
 
@@ -262,7 +261,7 @@ $ cd demo04
 $ npm run dev
 ```
 
-Actually, Webpack inserts an internal style sheet into `index.html` .
+Actually, webpack inserts an internal style sheet into `index.html` .
 
 ```html
 <head>
@@ -277,7 +276,7 @@ Actually, Webpack inserts an internal style sheet into `index.html` .
 
 ## Demo05: Image loader ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo05))
 
-Webpack could also include images in JS files.
+webpack could also include images in JS files.
 
 main.js
 
@@ -345,7 +344,7 @@ index.html
 
 <body>
     <h1 class="h1">Hello World</h1>
-    <h2 class="h2">Hello Webpack</h2>
+    <h2 class="h2">Hello webpack</h2>
     <div id="example"></div>
     <script src="./bundle.js"></script>
 </body>
@@ -380,7 +379,7 @@ ReactDOM.render( <
     h1 className = {
         style.h1
     } > Hello World < /h1> <
-    h2 className = "h2" > Hello Webpack < /h2> < /
+    h2 className = "h2" > Hello webpack < /h2> < /
     div > ,
     document.getElementById('example')
 );
@@ -434,7 +433,7 @@ Visiting http://127.0.0.1:8080 , you'll find that only second `h1` is red, becau
 
 ## Demo07: UglifyJs Plugin ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo07))
 
-Webpack has a plugin system to expand its functions. For example, [UglifyJs Plugin](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/) will minify output( `bundle.js` ) JS codes.
+webpack has a plugin system to expand its functions. For example, [UglifyJs Plugin](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/) will minify output( `bundle.js` ) JS codes.
 
 main.js
 
@@ -480,11 +479,11 @@ var o = "Hello";
 o += " World", document.write("<h1>" + o + "</h1>")
 ```
 
-## Demo08: HTML Webpack Plugin and Open Browser Webpack Plugin ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo08))
+## Demo08: HTML webpack Plugin and Open Browser webpack Plugin ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo08))
 
 This demo shows you how to load 3rd-party plugins.
 
-[html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) could create `index.html` for you, and [open-browser-webpack-plugin](https://github.com/baldore/open-browser-webpack-plugin) could open a new browser tab when Webpack loads.
+[html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) could create `index.html` for you, and [open-browser-webpack-plugin](https://github.com/baldore/open-browser-webpack-plugin) could open a new browser tab when webpack loads.
 
 main.js
 
@@ -505,7 +504,7 @@ module.exports = {
     },
     plugins: [
         new HtmlwebpackPlugin({
-            title: 'Webpack-demos',
+            title: 'webpack-demos',
             filename: 'index.html'
         }),
         new OpenBrowserPlugin({
@@ -522,7 +521,7 @@ $ cd demo08
 $ npm run dev
 ```
 
-Now you don't need to write `index.html` by hand and don't have to open browser by yourself. Webpack did all these things for you.
+Now you don't need to write `index.html` by hand and don't have to open browser by yourself. webpack did all these things for you.
 
 ## Demo09: Environment flags ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo09))
 
@@ -590,9 +589,9 @@ $ npm run dev
 
 ## Demo10: Code splitting ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo10))
 
-For big web apps, it’s not efficient to put all code into a single file. Webpack allows you to split a large JS file into several chunks. Especially, if some blocks of code are only required under some circumstances, these chunks could be loaded on demand.
+For big web apps, it’s not efficient to put all code into a single file. webpack allows you to split a large JS file into several chunks. Especially, if some blocks of code are only required under some circumstances, these chunks could be loaded on demand.
 
-Webpack uses `require.ensure` to define a split point ([official document](http://webpack.github.io/docs/code-splitting.html)).
+webpack uses `require.ensure` to define a split point ([official document](http://webpack.github.io/docs/code-splitting.html)).
 
 ```javascript
 // main.js
@@ -604,14 +603,14 @@ require.ensure(['./a'], function(require) {
 });
 ```
 
-`require.ensure` tells Webpack that `./a.js` should be separated from `bundle.js` and built into a single chunk file.
+`require.ensure` tells webpack that `./a.js` should be separated from `bundle.js` and built into a single chunk file.
 
 ```javascript
 // a.js
 module.exports = 'Hello World';
 ```
 
-Now Webpack takes care of the dependencies, output files and runtime stuff. You don't have to put any redundancy into your `index.html` and `webpack.config.js` .
+Now webpack takes care of the dependencies, output files and runtime stuff. You don't have to put any redundancy into your `index.html` and `webpack.config.js` .
 
 ```html
 <html>
@@ -641,7 +640,7 @@ $ cd demo10
 $ npm run dev
 ```
 
-On the surface, you won't feel any differences. However, Webpack actually builds `main.js` and `a.js` into different chunks( `bundle.js` and `0.bundle.js` ), and loads `0.bundle.js` from `bundle.js` when on demand.
+On the surface, you won't feel any differences. However, webpack actually builds `main.js` and `a.js` into different chunks( `bundle.js` and `0.bundle.js` ), and loads `0.bundle.js` from `bundle.js` when on demand.
 
 ## Demo11: Code splitting with bundle-loader ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo11))
 
@@ -662,9 +661,9 @@ load(function(file) {
 });
 ```
 
-`require('bundle-loader!./a.js')` tells Webpack to load `a.js` from another chunk.
+`require('bundle-loader!./a.js')` tells webpack to load `a.js` from another chunk.
 
-Now Webpack will build `main.js` into `bundle.js` , and `a.js` into `0.bundle.js` .
+Now webpack will build `main.js` into `bundle.js` , and `a.js` into `0.bundle.js` .
 
 ## Demo12: Common chunk ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo12))
 
@@ -685,7 +684,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 ReactDOM.render( <
-    h2 > Hello Webpack < /h2>,
+    h2 > Hello webpack < /h2>,
     document.getElementById('b')
 );
 ```
@@ -792,7 +791,7 @@ module.exports = {
 };
 ```
 
-In above codes, `entry.vendor: ['jquery']` tells Webpack that `jquery` should be included in the common chunk `vendor.js` .
+In above codes, `entry.vendor: ['jquery']` tells webpack that `jquery` should be included in the common chunk `vendor.js` .
 
 If you want a module available as a global variable in every module, such as making `$` and `jQuery` available in every module without writing `require("jquery")` . You should use `ProvidePlugin` ([Official doc](https://webpack.js.org/plugins/provide-plugin/)) which automatically loads modules instead of having to import or require them everywhere.
 
@@ -823,7 +822,7 @@ Of course, in this case, you should load `jquery.js` globally by yourself.
 
 ## Demo14: Exposing global variables ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo14))
 
-If you want to use some global variables, and don't want to include them in the Webpack bundle, you can enable `externals` field in `webpack.config.js` ([official document](https://webpack.js.org/configuration/externals/)).
+If you want to use some global variables, and don't want to include them in the webpack bundle, you can enable `externals` field in `webpack.config.js` ([official document](https://webpack.js.org/configuration/externals/)).
 
 For example, we have a `data.js` .
 
@@ -845,7 +844,7 @@ index.html
 </html>
 ```
 
-Attention, Webpack will only build `bundle.js` , but not `data.js` .
+Attention, webpack will only build `bundle.js` , but not `data.js` .
 
 We can expose `data` as a global variable.
 
@@ -1087,12 +1086,12 @@ $ npm run dev
 
 ## Useful links
 
-* [Webpack docs](https://webpack.js.org/concepts/)
+* [webpack docs](https://webpack.js.org/concepts/)
 * [webpack-howto](https://github.com/petehunt/webpack-howto), by Pete Hunt
-* [SurviveJS Webpack book](https://survivejs.com/webpack/introduction/), by Juho Vepsäläinen
-* [Diving into Webpack](https://web-design-weekly.com/2014/09/24/diving-webpack/), by Web Design Weekly
-* [Webpack and React is awesome](http://www.christianalfoni.com/articles/2014_12_13_Webpack-and-react-is-awesome), by Christian Alfoni
-* [Browserify vs Webpack](https://medium.com/@housecor/browserify-vs-webpack-b3d7ca08a0a9), by Cory House
+* [SurviveJS webpack book](https://survivejs.com/webpack/introduction/), by Juho Vepsäläinen
+* [Diving into webpack](https://web-design-weekly.com/2014/09/24/diving-webpack/), by Web Design Weekly
+* [webpack and React is awesome](http://www.christianalfoni.com/articles/2014_12_13_Webpack-and-react-is-awesome), by Christian Alfoni
+* [Browserify vs webpack](https://medium.com/@housecor/browserify-vs-webpack-b3d7ca08a0a9), by Cory House
 
 ## License
 
