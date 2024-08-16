@@ -1,96 +1,92 @@
-这个仓库是基于 [阮一峰](https://github.com/ruanyf) 的 Webpack 简明风格演示集合.
+This repo is a collection of simple demos of Webpack.
 
-原版示例配置于应用为 `webpack3.x` , 特更改为 `webpack5.x ` 版本, 以及增加了一些注释和说明, 以便更好的理解与贴近实际开发.
+These demos are purposely written in a simple and clear style. You will find no difficulty in following them to learn the powerful tool.
 
-## 导航
+## How to use
 
-* [阮一峰GitHub](https://github.com/ruanyf)
-* [阮一峰 webpack-demos 仓库地址](https://github.com/ruanyf/webpack-demos.git)
-* [原文README.md](./README-EN.md)
-
-## 如何使用
-
-首先, 全局安装 [webpack](https://www.npmjs.com/package/webpack) , [webpack-cli](https://www.npmjs.com/package/webpack-cli) 和 `webpack-dev-server` 这里推荐使用 [pnpm](https://pnpm.io/zh/) 进行安装.
+First, install [Webpack](https://www.npmjs.com/package/webpack) and [webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) globally.
 
 ```bash
-$ pnpm add -g webpack webpack-cli webpack-dev-server
+$ npm i -g webpack webpack-dev-server
 ```
 
-然后克隆这个仓库.
+Then, clone the repo.
 
 ```bash
-$ git clone https://github.com/shiwanmenghuxiahuashan/webpack-demos.git
+$ git clone https://github.com/ruanyf/webpack-demos.git
 ```
 
-初始化项目依赖
+Install the dependencies.
 
 ```bash
-$ cd webpack-demos #进入项目目录
-$ pnpm install
+$ cd webpack-demos
+$ npm install
 ```
 
-现在，使用存储库 demo*目录下的源文件。
+Now, play with the source files under the repo's demo* directories.
 
 ```bash
 $ cd demo01
-$ pnpm run dev
+$ npm run dev
 ```
 
-如果上述命令没有自动打开您的浏览器, 你必须自己访问 http://127.0.0.1:8080 .
+If the above command doesn't open your browser automatically, you have to visit http://127.0.0.1:8080 by yourself.
 
-## Webpack
+## Foreword: What is Webpack
 
-Webpack 是一个为浏览器构建 JavaScript 模块脚本的前端工具。
+Webpack is a front-end tool to build JavaScript module scripts for browsers.
+
+It can be used similar to Browserify, and do much more.
 
 ```bash
+$ browserify main.js > bundle.js
+# be equivalent to
 $ webpack main.js bundle.js
-
 ```
 
-Webpack 需要一个名为 `webpack.config.js` 的配置文件，它只是一个 CommonJS 模块。
+Webpack needs a configuration file called `webpack.config.js` which is just a CommonJS module.
 
 ```javascript
 // webpack.config.js
 module.exports = {
-    entry: './main.js',
-    output: {
-        filename: 'bundle.js'
-    }
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  }
 };
 ```
 
-有了 `webpack.config.js` , 你可以不携带任何参数运行 `webpack` 命令。
+After having `webpack.config.js`, you can invoke Webpack without any arguments.
 
 ```bash
-$ webpack 
-# 等于
-$ webpack --config webpack.config.js
+$ webpack
 ```
 
-也可以在你的 `package.json` 文件中的 `scripts` 字段中自定义脚本如下.
+Some command-line options you should know.
 
-```json
+- `webpack` – building for development
+- `webpack -p` – building for production (minification)
+- `webpack --watch` – for continuous incremental building
+- `webpack -d` – including source maps
+- `webpack --colors` – making building output pretty
+
+You could customize `scripts` field in your package.json file as following.
+
+```javascript
+// package.json
 {
-
-    // ...
-    "scripts": {
-        "build": "webpack --config webpack.config.js --mode=production",
-        "dev": "webpack-dev-server --open"
-    },
-    // ...
+  // ...
+  "scripts": {
+    "dev": "webpack-dev-server --devtool eval --progress --colors",
+    "deploy": "NODE_ENV=production webpack -p"
+  },
+  // ...
 }
-```
-
-然后使用包管理器运行脚本.
-
-```bash
-$ pnpm run build
-$ pnpm run dev
 ```
 
 ## Index
 
-1. [入口文件](./demo01/README.md)
+1. [Entry file](#demo01-entry-file-source)
 1. [Multiple entry files](#demo02-multiple-entry-files-source)
 1. [Babel-loader](#demo03-babel-loader-source)
 1. [CSS-loader](#demo04-css-loader-source)
@@ -105,6 +101,46 @@ $ pnpm run dev
 1. [Vendor chunk](#demo13-vendor-chunk-source)
 1. [Exposing Global Variables](#demo14-exposing-global-variables-source)
 1. [React router](#demo15-react-router-source)
+
+## Demo01: Entry file ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo01))
+
+Entry file is a file which Webpack reads to build `bundle.js`.
+
+For example, `main.js` is an entry file.
+
+```javascript
+// main.js
+document.write('<h1>Hello World</h1>');
+```
+
+index.html
+
+```html
+<html>
+  <body>
+    <script type="text/javascript" src="bundle.js"></script>
+  </body>
+</html>
+```
+
+Webpack follows `webpack.config.js` to build `bundle.js`.
+
+```javascript
+// webpack.config.js
+module.exports = {
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  }
+};
+```
+
+Launch the server, visit http://127.0.0.1:8080 .
+
+```bash
+$ cd demo01
+$ npm run dev
+```
 
 ## Demo02: Multiple entry files ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo02))
 
@@ -122,12 +158,10 @@ index.html
 
 ```html
 <html>
-
-<body>
+  <body>
     <script src="bundle1.js"></script>
     <script src="bundle2.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
@@ -135,13 +169,13 @@ webpack.config.js
 
 ```javascript
 module.exports = {
-    entry: {
-        bundle1: './main1.js',
-        bundle2: './main2.js'
-    },
-    output: {
-        filename: '[name].js'
-    }
+  entry: {
+    bundle1: './main1.js',
+    bundle2: './main2.js'
+  },
+  output: {
+    filename: '[name].js'
+  }
 };
 ```
 
@@ -158,9 +192,9 @@ For example, [Babel-loader](https://www.npmjs.com/package/babel-loader) can tran
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-ReactDOM.render( <
-    h1 > Hello, world! < /h1>,
-    document.querySelector('#wrapper')
+ReactDOM.render(
+  <h1>Hello, world!</h1>,
+  document.querySelector('#wrapper')
 );
 ```
 
@@ -168,12 +202,10 @@ index.html
 
 ```html
 <html>
-
-<body>
+  <body>
     <div id="wrapper"></div>
     <script src="bundle.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
@@ -181,22 +213,24 @@ webpack.config.js
 
 ```javascript
 module.exports = {
-    entry: './main.jsx',
-    output: {
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [{
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['es2015', 'react']
-                }
-            }
-        }]
-    }
+  entry: './main.jsx',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'react']
+          }
+        }
+      }
+    ]
+  }
 };
 ```
 
@@ -216,7 +250,7 @@ app.css
 
 ```css
 body {
-    background-color: blue;
+  background-color: blue;
 }
 ```
 
@@ -224,15 +258,12 @@ index.html
 
 ```html
 <html>
-
-<head>
+  <head>
     <script type="text/javascript" src="bundle.js"></script>
-</head>
-
-<body>
+  </head>
+  <body>
     <h1>Hello World</h1>
-</body>
-
+  </body>
 </html>
 ```
 
@@ -240,16 +271,18 @@ webpack.config.js
 
 ```javascript
 module.exports = {
-    entry: './main.js',
-    output: {
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [{
-            test: /\.css$/,
-            use: ['style-loader', 'css-loader']
-        }, ]
-    }
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules:[
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      },
+    ]
+  }
 };
 ```
 
@@ -262,16 +295,16 @@ $ cd demo04
 $ npm run dev
 ```
 
-Actually, Webpack inserts an internal style sheet into `index.html` .
+Actually, Webpack inserts an internal style sheet into `index.html`.
 
 ```html
 <head>
-    <script type="text/javascript" src="bundle.js"></script>
-    <style type="text/css">
-        body {
-            background-color: blue;
-        }
-    </style>
+  <script type="text/javascript" src="bundle.js"></script>
+  <style type="text/css">
+    body {
+      background-color: blue;
+    }
+  </style>
 </head>
 ```
 
@@ -295,11 +328,9 @@ index.html
 
 ```html
 <html>
-
-<body>
+  <body>
     <script type="text/javascript" src="bundle.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
@@ -307,21 +338,25 @@ webpack.config.js
 
 ```javascript
 module.exports = {
-    entry: './main.js',
-    output: {
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [{
-            test: /\.(png|jpg)$/,
-            use: [{
-                loader: 'url-loader',
-                options: {
-                    limit: 8192
-                }
-            }]
-        }]
-    }
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules:[
+      {
+        test: /\.(png|jpg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
+        ]
+      }
+    ]
+  }
 };
 ```
 
@@ -342,14 +377,12 @@ index.html
 
 ```html
 <html>
-
 <body>
-    <h1 class="h1">Hello World</h1>
-    <h2 class="h2">Hello Webpack</h2>
-    <div id="example"></div>
-    <script src="./bundle.js"></script>
+  <h1 class="h1">Hello World</h1>
+  <h2 class="h2">Hello Webpack</h2>
+  <div id="example"></div>
+  <script src="./bundle.js"></script>
 </body>
-
 </html>
 ```
 
@@ -358,12 +391,12 @@ app.css
 ```css
 /* local scope */
 .h1 {
-    color: red;
+  color:red;
 }
 
 /* global scope */
 :global(.h2) {
-    color: blue;
+  color: blue;
 }
 ```
 
@@ -374,15 +407,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var style = require('./app.css');
 
-ReactDOM.render( <
-    div >
-    <
-    h1 className = {
-        style.h1
-    } > Hello World < /h1> <
-    h2 className = "h2" > Hello Webpack < /h2> < /
-    div > ,
-    document.getElementById('example')
+ReactDOM.render(
+  <div>
+    <h1 className={style.h1}>Hello World</h1>
+    <h2 className="h2">Hello Webpack</h2>
+  </div>,
+  document.getElementById('example')
 );
 ```
 
@@ -390,36 +420,38 @@ webpack.config.js
 
 ```javascript
 module.exports = {
-    entry: './main.jsx',
-    output: {
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [{
-                test: /\.js[x]?$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['es2015', 'react']
-                    }
-                }
-            },
-            {
-                test: /\.css$/,
-                use: [{
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true
-                        }
-                    }
-                ]
-            }
+  entry: './main.jsx',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules:[
+      {
+        test: /\.js[x]?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'react']
+          }
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+             loader: 'css-loader',
+             options: {
+               modules: true
+             }
+          }
         ]
-    }
+      }
+    ]
+  }
 };
 ```
 
@@ -434,7 +466,7 @@ Visiting http://127.0.0.1:8080 , you'll find that only second `h1` is red, becau
 
 ## Demo07: UglifyJs Plugin ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo07))
 
-Webpack has a plugin system to expand its functions. For example, [UglifyJs Plugin](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/) will minify output( `bundle.js` ) JS codes.
+Webpack has a plugin system to expand its functions. For example, [UglifyJs Plugin](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/) will minify output(`bundle.js`) JS codes.
 
 main.js
 
@@ -448,11 +480,9 @@ index.html
 
 ```html
 <html>
-
 <body>
-    <script src="bundle.js"></script>
+  <script src="bundle.js"></script>
 </body>
-
 </html>
 ```
 
@@ -463,21 +493,20 @@ var webpack = require('webpack');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-    entry: './main.js',
-    output: {
-        filename: 'bundle.js'
-    },
-    plugins: [
-        new UglifyJsPlugin()
-    ]
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  plugins: [
+    new UglifyJsPlugin()
+  ]
 };
 ```
 
 After launching the server, `main.js` will be minified into following.
 
 ```javascript
-var o = "Hello";
-o += " World", document.write("<h1>" + o + "</h1>")
+var o="Hello";o+=" World",document.write("<h1>"+o+"</h1>")
 ```
 
 ## Demo08: HTML Webpack Plugin and Open Browser Webpack Plugin ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo08))
@@ -499,19 +528,19 @@ var HtmlwebpackPlugin = require('html-webpack-plugin');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
-    entry: './main.js',
-    output: {
-        filename: 'bundle.js'
-    },
-    plugins: [
-        new HtmlwebpackPlugin({
-            title: 'Webpack-demos',
-            filename: 'index.html'
-        }),
-        new OpenBrowserPlugin({
-            url: 'http://localhost:8080'
-        })
-    ]
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  plugins: [
+    new HtmlwebpackPlugin({
+      title: 'Webpack-demos',
+      filename: 'index.html'
+    }),
+    new OpenBrowserPlugin({
+      url: 'http://localhost:8080'
+    })
+  ]
 };
 ```
 
@@ -534,7 +563,7 @@ main.js
 document.write('<h1>Hello World</h1>');
 
 if (__DEV__) {
-    document.write(new Date());
+  document.write(new Date());
 }
 ```
 
@@ -542,11 +571,9 @@ index.html
 
 ```html
 <html>
-
 <body>
-    <script src="bundle.js"></script>
+  <script src="bundle.js"></script>
 </body>
-
 </html>
 ```
 
@@ -556,28 +583,28 @@ webpack.config.js
 var webpack = require('webpack');
 
 var devFlagPlugin = new webpack.DefinePlugin({
-    __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
 });
 
 module.exports = {
-    entry: './main.js',
-    output: {
-        filename: 'bundle.js'
-    },
-    plugins: [devFlagPlugin]
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  plugins: [devFlagPlugin]
 };
 ```
 
-Now pass environment variable into webpack. Opening `demo09/package.json` , you should find `scripts` field as following.
+Now pass environment variable into webpack. Opening `demo09/package.json`, you should find `scripts` field as following.
 
 ```javascript
 // package.json
 {
-    // ...
-    "scripts": {
-        "dev": "cross-env DEBUG=true webpack-dev-server --open",
-    },
-    // ...
+  // ...
+  "scripts": {
+    "dev": "cross-env DEBUG=true webpack-dev-server --open",
+  },
+  // ...
 }
 ```
 
@@ -596,11 +623,11 @@ Webpack uses `require.ensure` to define a split point ([official document](http:
 
 ```javascript
 // main.js
-require.ensure(['./a'], function(require) {
-    var content = require('./a');
-    document.open();
-    document.write('<h1>' + content + '</h1>');
-    document.close();
+require.ensure(['./a'], function (require) {
+  var content = require('./a');
+  document.open();
+  document.write('<h1>' + content + '</h1>');
+  document.close();
 });
 ```
 
@@ -611,15 +638,13 @@ require.ensure(['./a'], function(require) {
 module.exports = 'Hello World';
 ```
 
-Now Webpack takes care of the dependencies, output files and runtime stuff. You don't have to put any redundancy into your `index.html` and `webpack.config.js` .
+Now Webpack takes care of the dependencies, output files and runtime stuff. You don't have to put any redundancy into your `index.html` and `webpack.config.js`.
 
 ```html
 <html>
-
-<body>
+  <body>
     <script src="bundle.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
@@ -627,10 +652,10 @@ webpack.config.js
 
 ```javascript
 module.exports = {
-    entry: './main.js',
-    output: {
-        filename: 'bundle.js'
-    }
+  entry: './main.js',
+  output: {
+    filename: 'bundle.js'
+  }
 };
 ```
 
@@ -641,7 +666,7 @@ $ cd demo10
 $ npm run dev
 ```
 
-On the surface, you won't feel any differences. However, Webpack actually builds `main.js` and `a.js` into different chunks( `bundle.js` and `0.bundle.js` ), and loads `0.bundle.js` from `bundle.js` when on demand.
+On the surface, you won't feel any differences. However, Webpack actually builds `main.js` and `a.js` into different chunks(`bundle.js` and `0.bundle.js`), and loads `0.bundle.js` from `bundle.js` when on demand.
 
 ## Demo11: Code splitting with bundle-loader ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo11))
 
@@ -656,15 +681,15 @@ var load = require('bundle-loader!./a.js');
 // To wait until a.js is available (and get the exports)
 //  you need to async wait for it.
 load(function(file) {
-    document.open();
-    document.write('<h1>' + file + '</h1>');
-    document.close();
+  document.open();
+  document.write('<h1>' + file + '</h1>');
+  document.close();
 });
 ```
 
 `require('bundle-loader!./a.js')` tells Webpack to load `a.js` from another chunk.
 
-Now Webpack will build `main.js` into `bundle.js` , and `a.js` into `0.bundle.js` .
+Now Webpack will build `main.js` into `bundle.js`, and `a.js` into `0.bundle.js`.
 
 ## Demo12: Common chunk ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo12))
 
@@ -675,18 +700,18 @@ When multi scripts have common chunks, you can extract the common part into a se
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-ReactDOM.render( <
-    h1 > Hello World < /h1>,
-    document.getElementById('a')
+ReactDOM.render(
+  <h1>Hello World</h1>,
+  document.getElementById('a')
 );
 
 // main2.jsx
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-ReactDOM.render( <
-    h2 > Hello Webpack < /h2>,
-    document.getElementById('b')
+ReactDOM.render(
+  <h2>Hello Webpack</h2>,
+  document.getElementById('b')
 );
 ```
 
@@ -694,19 +719,17 @@ index.html
 
 ```html
 <html>
-
-<body>
+  <body>
     <div id="a"></div>
     <div id="b"></div>
     <script src="commons.js"></script>
     <script src="bundle1.js"></script>
     <script src="bundle2.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
-The above `commons.js` is the common chunk of `main1.jsx` and `main2.jsx` . As you can imagine, `commons.js` includes `react` and `react-dom` .
+The above `commons.js` is the common chunk of `main1.jsx` and `main2.jsx`. As you can imagine, `commons.js` includes `react` and `react-dom`.
 
 webpack.config.js
 
@@ -714,34 +737,36 @@ webpack.config.js
 var webpack = require('webpack');
 
 module.exports = {
-    entry: {
-        bundle1: './main1.jsx',
-        bundle2: './main2.jsx'
-    },
-    output: {
-        filename: '[name].js'
-    },
-    module: {
-        rules: [{
-            test: /\.js[x]?$/,
-            exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['es2015', 'react']
-                }
-            }
-        }, ]
-    },
-    plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "commons",
-            // (the commons chunk name)
-
-            filename: "commons.js",
-            // (the filename of the commons chunk)
-        })
+  entry: {
+    bundle1: './main1.jsx',
+    bundle2: './main2.jsx'
+  },
+  output: {
+    filename: '[name].js'
+  },
+  module: {
+    rules:[
+      {
+        test: /\.js[x]?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'react']
+          }
+        }
+      },
     ]
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "commons",
+      // (the commons chunk name)
+
+      filename: "commons.js",
+      // (the filename of the commons chunk)
+    })
+  ]
 }
 ```
 
@@ -760,13 +785,11 @@ index.html
 
 ```html
 <html>
-
-<body>
+  <body>
     <h1></h1>
     <script src="vendor.js"></script>
     <script src="bundle.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
@@ -776,46 +799,47 @@ webpack.config.js
 var webpack = require('webpack');
 
 module.exports = {
-    entry: {
-        app: './main.js',
-        vendor: ['jquery'],
-    },
-    output: {
-        filename: 'bundle.js'
-    },
-    plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            filename: 'vendor.js'
-        })
-    ]
+  entry: {
+    app: './main.js',
+    vendor: ['jquery'],
+  },
+  output: {
+    filename: 'bundle.js'
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.js'
+    })
+  ]
 };
 ```
 
-In above codes, `entry.vendor: ['jquery']` tells Webpack that `jquery` should be included in the common chunk `vendor.js` .
+In above codes, `entry.vendor: ['jquery']` tells Webpack that `jquery` should be included in the common chunk `vendor.js`.
 
-If you want a module available as a global variable in every module, such as making `$` and `jQuery` available in every module without writing `require("jquery")` . You should use `ProvidePlugin` ([Official doc](https://webpack.js.org/plugins/provide-plugin/)) which automatically loads modules instead of having to import or require them everywhere.
+If you want a module available as a global variable in every module, such as making `$` and `jQuery` available in every module without writing `require("jquery")`. You should use `ProvidePlugin` ([Official doc](https://webpack.js.org/plugins/provide-plugin/)) which automatically loads modules instead of having to import or require them everywhere.
 
 ```javascript
 // main.js
 $('h1').text('Hello World');
 
+
 // webpack.config.js
 var webpack = require('webpack');
 
 module.exports = {
-    entry: {
-        app: './main.js'
-    },
-    output: {
-        filename: 'bundle.js'
-    },
-    plugins: [
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery'
-        })
-    ]
+  entry: {
+    app: './main.js'
+  },
+  output: {
+    filename: 'bundle.js'
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
+  ]
 };
 ```
 
@@ -825,7 +849,7 @@ Of course, in this case, you should load `jquery.js` globally by yourself.
 
 If you want to use some global variables, and don't want to include them in the Webpack bundle, you can enable `externals` field in `webpack.config.js` ([official document](https://webpack.js.org/configuration/externals/)).
 
-For example, we have a `data.js` .
+For example, we have a `data.js`.
 
 ```javascript
 // data.js
@@ -836,43 +860,43 @@ index.html
 
 ```html
 <html>
-
-<body>
+  <body>
     <script src="data.js"></script>
     <script src="bundle.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
-Attention, Webpack will only build `bundle.js` , but not `data.js` .
+Attention, Webpack will only build `bundle.js`, but not `data.js`.
 
 We can expose `data` as a global variable.
 
 ```javascript
 // webpack.config.js
 module.exports = {
-    entry: './main.jsx',
-    output: {
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [{
-            test: /\.js[x]?$/,
-            exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['es2015', 'react']
-                }
-            }
-        }, ]
-    },
-    externals: {
-        // require('data') is external and available
-        //  on the global var data
-        'data': 'data'
-    }
+  entry: './main.jsx',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules:[
+      {
+        test: /\.js[x]?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'react']
+          }
+        }
+      },
+    ]
+  },
+  externals: {
+    // require('data') is external and available
+    //  on the global var data
+    'data': 'data'
+  }
 };
 ```
 
@@ -884,15 +908,13 @@ var data = require('data');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-ReactDOM.render( <
-    h1 > {
-        data
-    } < /h1>,
-    document.body
+ReactDOM.render(
+  <h1>{data}</h1>,
+  document.body
 );
 ```
 
-You could also put `react` and `react-dom` into `externals` , which will greatly decrease the building time and building size of `bundle.js` .
+You could also put `react` and `react-dom` into `externals`, which will greatly decrease the building time and building size of `bundle.js`.
 
 ## Demo15: React router ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo15))
 
@@ -926,27 +948,28 @@ webpack.config.js
 
 ```javascript
 module.exports = {
-    entry: './index.js',
-    output: {
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [{
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            },
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['es2015', 'react']
-                    }
-                }
-            },
-        ]
-    }
+  entry: './index.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'react']
+          }
+        }
+      },
+    ]
+  }
 };
 ```
 
@@ -954,114 +977,71 @@ index.js
 
 ```javascript
 import React from 'react';
-import {
-    render
-} from 'react-dom';
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-    Link
-} from 'react-router-dom';
+import { render } from 'react-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import './app.css';
 
 class App extends React.Component {
-    render() {
-        return ( <
-            div >
-            <
-            header >
-            <
-            ul >
-            <
-            li > < Link to = "/app" > Dashboard < /Link></li >
-            <
-            li > < Link to = "/inbox" > Inbox < /Link></li >
-            <
-            li > < Link to = "/calendar" > Calendar < /Link></li >
-            <
-            /ul>
-            Logged in as Jane <
-            /header> <
-            main >
-            <
-            Switch >
-            <
-            Route exact path = "/"
-            component = {
-                Dashboard
-            }
-            /> <
-            Route path = "/app"
-            component = {
-                Dashboard
-            }
-            /> <
-            Route path = "/inbox"
-            component = {
-                Inbox
-            }
-            /> <
-            Route path = "/calendar"
-            component = {
-                Calendar
-            }
-            /> <
-            Route path = "*"
-            component = {
-                Dashboard
-            }
-            /> < /
-            Switch > <
-            /main> < /
-            div >
-        );
-    }
+  render() {
+    return (
+      <div>
+        <header>
+          <ul>
+            <li><Link to="/app">Dashboard</Link></li>
+            <li><Link to="/inbox">Inbox</Link></li>
+            <li><Link to="/calendar">Calendar</Link></li>
+          </ul>
+          Logged in as Jane
+        </header>
+        <main>
+          <Switch>
+            <Route exact path="/" component={Dashboard}/>
+            <Route path="/app" component={Dashboard}/>
+            <Route path="/inbox" component={Inbox}/>
+            <Route path="/calendar" component={Calendar}/>
+            <Route path="*" component={Dashboard}/>
+          </Switch>
+        </main>
+      </div>
+    );
+  }
 };
 
 class Dashboard extends React.Component {
-    render() {
-        return ( <
-            div >
-            <
-            p > Dashboard < /p> < /
-            div >
-        );
-    }
+  render() {
+    return (
+      <div>
+        <p>Dashboard</p>
+      </div>
+    );
+  }
 };
 
 class Inbox extends React.Component {
-    render() {
-        return ( <
-            div >
-            <
-            p > Inbox < /p> < /
-            div >
-        );
-    }
+  render() {
+    return (
+      <div>
+        <p>Inbox</p>
+      </div>
+    );
+  }
 };
 
 class Calendar extends React.Component {
-    render() {
-        return ( <
-            div >
-            <
-            p > Calendar < /p> < /
-            div >
-        );
-    }
+  render() {
+    return (
+      <div>
+        <p>Calendar</p>
+      </div>
+    );
+  }
 };
 
-render(( <
-    BrowserRouter >
-    <
-    Route path = "/"
-    component = {
-        App
-    }
-    /> < /
-    BrowserRouter >
+render((
+  <BrowserRouter>
+    <Route path="/" component={App} />
+  </BrowserRouter>
 ), document.querySelector('#app'));
 ```
 
@@ -1069,12 +1049,10 @@ index.html
 
 ```html
 <html>
-
-<body>
+  <body>
     <div id="app"></div>
     <script src="/bundle.js"></script>
-</body>
-
+  </body>
 </htmL>
 ```
 
@@ -1087,12 +1065,12 @@ $ npm run dev
 
 ## Useful links
 
-* [Webpack docs](https://webpack.js.org/concepts/)
-* [webpack-howto](https://github.com/petehunt/webpack-howto), by Pete Hunt
-* [SurviveJS Webpack book](https://survivejs.com/webpack/introduction/), by Juho Vepsäläinen
-* [Diving into Webpack](https://web-design-weekly.com/2014/09/24/diving-webpack/), by Web Design Weekly
-* [Webpack and React is awesome](http://www.christianalfoni.com/articles/2014_12_13_Webpack-and-react-is-awesome), by Christian Alfoni
-* [Browserify vs Webpack](https://medium.com/@housecor/browserify-vs-webpack-b3d7ca08a0a9), by Cory House
+- [Webpack docs](https://webpack.js.org/concepts/)
+- [webpack-howto](https://github.com/petehunt/webpack-howto), by Pete Hunt
+- [SurviveJS Webpack book](https://survivejs.com/webpack/introduction/), by Juho Vepsäläinen
+- [Diving into Webpack](https://web-design-weekly.com/2014/09/24/diving-webpack/), by Web Design Weekly
+- [Webpack and React is awesome](http://www.christianalfoni.com/articles/2014_12_13_Webpack-and-react-is-awesome), by Christian Alfoni
+- [Browserify vs Webpack](https://medium.com/@housecor/browserify-vs-webpack-b3d7ca08a0a9), by Cory House
 
 ## License
 
