@@ -1,0 +1,41 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>webpack-多入口</title>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>模板</th>
+          <th>描述</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-th="模板"><span>[id]</span></td>
+          <td data-th="描述"><span>模块的 ID</span></td>
+        </tr>
+        <tr>
+          <td data-th="模板"><span>[moduleid]</span></td>
+          <td data-th="描述"><span>同上，但已弃用</span></td>
+        </tr>
+        <tr>
+          <td data-th="模板"><span>[hash]</span></td>
+          <td data-th="描述"><span>模块的 Hash 值</span></td>
+        </tr>
+        <tr>
+          <td data-th="模板"><span>[modulehash]</span></td>
+          <td data-th="描述"><span>同上，但已弃用</span></td>
+        </tr>
+        <tr>
+          <td data-th="模板"><span>[contenthash]</span></td>
+          <td data-th="描述"><span>模块内容的 Hash 值</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <script src="bundle1.js"></script>
+    <script src="bundle2.js"></script>
+  </body>
+</html>

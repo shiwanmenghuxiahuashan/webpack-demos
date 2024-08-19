@@ -105,44 +105,6 @@ $ pnpm run dev
 1. [Exposing Global Variables](#demo14-exposing-global-variables-source)
 1. [React router](#demo15-react-router-source)
 
-## Demo02: Multiple entry files ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo02))
-
-Multiple entry files are allowed. It is useful for a multi-page app which has different entry file for each page.
-
-```javascript
-// main1.js
-document.write('<h1>Hello World</h1>');
-
-// main2.js
-document.write('<h2>Hello webpack</h2>');
-```
-
-index.html
-
-```html
-<html>
-
-<body>
-    <script src="bundle1.js"></script>
-    <script src="bundle2.js"></script>
-</body>
-
-</html>
-```
-
-webpack.config.js
-
-```javascript
-module.exports = {
-    entry: {
-        bundle1: './main1.js',
-        bundle2: './main2.js'
-    },
-    output: {
-        filename: '[name].js'
-    }
-};
-```
 
 ## Demo03: Babel-loader ([source](https://github.com/ruanyf/webpack-demos/tree/master/demo03))
 
