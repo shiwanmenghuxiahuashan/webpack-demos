@@ -90,8 +90,8 @@ $ pnpm run dev
 ## Index
 
 1. [入口文件](./demo01/README.md) [源码](./demo01/)
-1. [Multiple entry files](#demo02-multiple-entry-files-source)
-1. [Babel-loader](#demo03-babel-loader-source)
+2. [多入口](./demo02/README.md) [源码](./demo02/)
+1. [加载器 (loader)](/demo03/README.md) [源码](./demo03/)
 1. [CSS-loader](#demo04-css-loader-source)
 1. [Image loader](#demo05-image-loader-source)
 1. [CSS Module](#demo06-css-module-source)
